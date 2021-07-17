@@ -9,6 +9,7 @@ import CircleColorPicker, {Color} from "./CircleColorPicker";
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import Divider from "@material-ui/core/Divider";
 import { DatePicker } from "@material-ui/pickers";
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 
 const remainderDetailsStyles = (theme: Theme) => createStyles({
@@ -17,6 +18,10 @@ const remainderDetailsStyles = (theme: Theme) => createStyles({
     },
     titleLabel: {
         fontSize: '28px'
+    },
+    note: {
+        resize: "both",
+        minHeight: "20px"
     }
 });
 
@@ -26,6 +31,7 @@ interface RemainderDetailsProps extends WithStyles<typeof remainderDetailsStyles
 
 const RemainderDetails: FunctionComponent<RemainderDetailsProps> = ({ classes }) => {
     const [ title, setTitle ] = useState<string>('');
+    const [ date, setDate ] = useState<Date>(new Date());
     const [ color, setColor ] = useState<Color>({ value: '#6d1cac', label: 'Calender' }); //hex value
 
     return (
@@ -70,17 +76,24 @@ const RemainderDetails: FunctionComponent<RemainderDetailsProps> = ({ classes })
                     </Box>
                 </Grid>
             </Grid>
-            <Grid container>
+            <Grid
+                item
+                container
+            >
+                <Grid item xs={1}>
+                    <Box mt={1} />
+                    <ScheduleIcon />
+                </Grid>
                 <Grid item>
                     <DatePicker
-                        disableToolbar
+                        autoOk
+                        format="MMM dd, yyyy"
                         variant="inline"
-                        label="Only calendar"
-                        helperText="No year selection"
+                        value={date}
+                        onChange={(value: Date) => setDate(value)}
                     />
                 </Grid>
             </Grid>
-            <Divider variant="middle" />
             <Grid
                 item
                 container

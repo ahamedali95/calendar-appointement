@@ -114,7 +114,7 @@ class App extends Component<Props, State> {
 					<AppBar>
 						<Toolbar>
 							{/* Ideally, official application logo belongs here*/}
-							<ScheduleIcon className={classes.logo} />
+							c
 							<Typography
 								className={classes.appName}
 								variant="h6"

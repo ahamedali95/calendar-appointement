@@ -8,6 +8,8 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import {ThemeProvider} from '@material-ui/core/styles';
 import theme from "./layout/theme";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 declare global {
     interface Window { __REDUX_DEVTOOLS_EXTENSION__: any; }
@@ -20,9 +22,11 @@ const store = createStore(
 
 ReactDOM.render(
 	<ThemeProvider theme={theme}>
-		<Provider store={ store as any}>
-			<AppContainer />
-		</Provider>
+		<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<Provider store={ store as any}>
+				<AppContainer />
+			</Provider>
+		</MuiPickersUtilsProvider>
 	</ThemeProvider>,
 	document.getElementById('root'));
 
