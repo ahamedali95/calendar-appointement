@@ -10,9 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-
 import { WithStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import ScheduleIcon from '@material-ui/icons/Schedule';
+
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 import * as dateFns from 'date-fns';
 
@@ -88,18 +88,18 @@ class App extends Component<Props, State> {
 	}
 
 	// arrow functions to skip binding in constructor
-	// wow I love this library
+	// wow I love this date library
 	prevMonth = () => {
 		this.setState( { date: dateFns.subMonths( this.state.date, 1 ) } );
-	}
+	};
 
 	nextMonth = () => {
 		this.setState( { date: dateFns.addMonths( this.state.date, 1 ) } );
-	}
+	};
 
     currentMonth = () => {
         this.setState( { date: new Date() } );
-    }
+    };
 
 	render() {
 		const { classes, onFabAddClick } = this.props;
@@ -114,7 +114,7 @@ class App extends Component<Props, State> {
 					<AppBar>
 						<Toolbar>
 							{/* Ideally, official application logo belongs here*/}
-							c
+							<CalendarTodayIcon />
 							<Typography
 								className={classes.appName}
 								variant="h6"

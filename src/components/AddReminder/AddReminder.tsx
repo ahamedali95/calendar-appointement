@@ -1,22 +1,26 @@
-import React, {ChangeEvent, useState} from 'react';
-import CloseIcon from '@material-ui/icons/Close';
+import React, {useCallback, useEffect, useReducer} from 'react';
+
+// I believe material-ui supports tree shaking as it uses ES6 to construct its modules
+// so we can able to write more simplified import statements. To confirm,
+// we can use the webpack-bundle-analyzer plugin to inspect the bundle size.
+// I once get to explore tree-shaking, please check it out: https://ahamedblogs.wordpress.com/2020/02/11/reducing-js-bundle-sizes-using-tree-shaking/
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { WithStyles, withStyles, createStyles, Theme } from '@material-ui/core/styles';
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import RemainderDetails from "./RemainderDetails";
+import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
+
+import CloseIcon from '@material-ui/icons/Close';
+
+import RemainderDetails from './RemainderDetails';
+import { remainderDetailsReducer } from '../../reducers';
+import { initialState as remainderDetailsState, InitialState } from '../../reducers/remainderDetailsReducer';
 
 
-const styles = (theme: Theme) => createStyles({
+const styles = () => createStyles({
 	addReminderFormContainer: {
-		minHeight: '250px',
+		minHeight: '260px',
 		marginTop: '10px',
 		display: 'flex',
 		flexDirection: 'column'
@@ -35,11 +39,31 @@ interface Props extends WithStyles<typeof styles>{
 
 const AddReminder = (props: Props) => {
 		const { classes, isOpen, onClose } = props;
+		const [ state, dispatch ] = useReducer(remainderDetailsReducer, remainderDetailsState, undefined);
+
+		const handleClose = (): void => {
+			handleResetClick(); //Clear field on close of the dialog. Currently, MUI dialog does not clear internal state on close.
+			onClose()
+		};
+
+		const handleSaveClick = (): void => {
+
+		};
+
+		const handleChange = useCallback((property: keyof InitialState, value: any): void => {
+			dispatch({ type: 'UPDATE_PROPERTY', property, value });
+		}, [ dispatch ]);
+
+		const handleResetClick = useCallback((): void => {
+			dispatch({ type: 'RESET' });
+		}, [ dispatch ]);
+
+		console.log(state)
 
 		return (
 			<Dialog
-				open={ !isOpen }
-				onClose={onClose}
+				open={isOpen}
+				onClose={handleClose}
 				aria-labelledby='form-dialog-title'
 				fullWidth={ true }
 				maxWidth='md'
@@ -52,7 +76,13 @@ const AddReminder = (props: Props) => {
 				</DialogTitle>
 				<Divider light />
 				<DialogContent className={ classes.addReminderFormContainer }>
-					<RemainderDetails />
+					<RemainderDetails
+						data={state}
+						onChange={handleChange}
+						onCancelClick={handleClose}
+						onSaveClick={handleSaveClick}
+						onResetClick={handleResetClick}
+					/>
 				</DialogContent>
 			</Dialog>
 		);

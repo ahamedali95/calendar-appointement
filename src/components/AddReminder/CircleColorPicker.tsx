@@ -1,19 +1,15 @@
 import React, {FunctionComponent, useState} from 'react';
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Badge from "@material-ui/core/Badge";
-import FormControl from "@material-ui/core/FormControl";
-import Box from "@material-ui/core/Box";
 
+import Select from '@material-ui/core/Select';
+import Badge from '@material-ui/core/Badge';
+import FormControl from '@material-ui/core/FormControl';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import {createStyles, Theme, WithStyles} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import {createStyles, Theme, WithStyles} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Tooltip from "@material-ui/core/Tooltip";
-import InputLabel from "@material-ui/core/InputLabel";
-import Button from "@material-ui/core/Button";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-
 
 export type Color = {
   value: string,
@@ -72,65 +68,60 @@ const circleColorPickerStyles = (theme: Theme) => createStyles({
 
 interface CircleColorPickerProps extends WithStyles<typeof circleColorPickerStyles> {
     value: Color,
-    onValueChange: (value: Color) => unknown
+    onValueChange: (value: Color) => unknown;
 }
 
 const CircleColorPicker: FunctionComponent<CircleColorPickerProps> = ({ classes, value, onValueChange }) => {
-    const [ isOpen, setIsOpen ] = useState<boolean>(false);
+    const [ isOpen, setIsOpen ] = useState<boolean>(false); //controlled select
 
     const handleColorSelection = (color: Color): void => {
-        debugger
         onValueChange(color);
         setIsOpen(false);
-        console.log(color)
     };
 
     return (
         <>
 
-            <FormControl
-                className={classes.formControl}
-            >
+            <FormControl className={classes.formControl}>
                 <Tooltip
                     placement='bottom'
                     title={ isOpen ? '' : 'Select remainder color'}
                 >
                     {
                         isOpen ?
-
-                                <Select
-                                    open
-                                    onClose={() => setIsOpen(false)}
-                                >
-                                    {
-                                        colors.map((color: Color, index: number): JSX.Element => {
-                                            return (
-                                                <Box
-                                                    key={`${color.value}-${index}`}
-                                                    mt={2}
-                                                    ml={3}
+                            <Select
+                                open
+                                onClose={() => setIsOpen(false)}
+                            >
+                                {
+                                    colors.map((color: Color, index: number): JSX.Element => {
+                                        return (
+                                            <Box
+                                                key={`${color.value}-${index}`}
+                                                mt={2}
+                                                ml={3}
+                                            >
+                                                <Tooltip
+                                                    placement='top'
+                                                    title={color.label}
                                                 >
-                                                    <Tooltip
-                                                        placement='top'
-                                                        title={color.label}
-                                                    >
-                                                        <Badge
-                                                            onClick={() => handleColorSelection(color)}
-                                                            badgeContent={color.value === value.value ? '✓' : ''}
-                                                            classes={{
-                                                                badge: `${classes[`${color.label[0].toLowerCase()}${color.label.substr(1)}`]} ${classes.badgeHighlight} ${classes.badge}`
-                                                            }}
-                                                        />
-                                                    </Tooltip>
-                                                </Box>
-                                            );
-                                        })
-                                    }
-                                </Select>
+                                                    <Badge
+                                                        onClick={() => handleColorSelection(color)}
+                                                        badgeContent={color.value === value.value ? '✓' : ''}
+                                                        classes={{
+                                                            badge: `${classes[`${color.label[0].toLowerCase()}${color.label.substr(1)}`]} ${classes.badgeHighlight} ${classes.badge}`
+                                                        }}
+                                                    />
+                                                </Tooltip>
+                                            </Box>
+                                        );
+                                    })
+                                }
+                            </Select>
                             :
                             <Button onClick={() => setIsOpen(true)}>
                                 <Badge
-                                    badgeContent=""
+                                    badgeContent=''
                                     classes={{badge: `${classes[`${value.label[0].toLowerCase()}${value.label.substr(1)}`]}`}}
                                 />
                                 <Box ml={2} />
