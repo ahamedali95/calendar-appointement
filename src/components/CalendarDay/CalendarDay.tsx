@@ -18,7 +18,7 @@ const styles = (theme: Theme) => createStyles({
 		flex: '1 0 13%',
 		flexDirection: 'column',
 		border: '1px solid lightgray',
-		backgroundColor: 'rgba( 211, 211, 211, 0.4 )',
+		backgroundColor: '#fcf2ff',
 		cursor: 'pointer'
 	},
 	dateNumber: {

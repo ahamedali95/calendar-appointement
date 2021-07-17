@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -7,6 +7,11 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles, withStyles, createStyles, Theme } from '@material-ui/core/styles';
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+
 
 const styles = (theme: Theme) => createStyles({
 	addReminderFormContainer: {
@@ -19,6 +24,12 @@ const styles = (theme: Theme) => createStyles({
 		position: 'absolute',
 		right: '10px',
 		top: '10px'
+	},
+	titleContent: {
+		fontSize: '28px'
+	},
+	titleLabel: {
+		fontSize: '28px'
 	}
 });
 
@@ -28,6 +39,8 @@ interface Props extends WithStyles<typeof styles>{
 }
 
 const AddReminder = (props: Props) => {
+        const [ title, setTitle ] = useState<string>('');
+        const [ color, setColor ] = useState<string>('');
 		const { classes, isOpen, onClose } = props;
 
 		return (
@@ -46,9 +59,42 @@ const AddReminder = (props: Props) => {
 				</DialogTitle>
 				<Divider light />
 				<DialogContent className={ classes.addReminderFormContainer }>
-					<Typography>
-						Use this space to create the UI to add a reminder to the calendar.
-					</Typography>
+					<Grid
+						direction='row'
+						container
+					>
+						<Grid item container>
+							<Grid item xs={10}>
+								<TextField
+									fullWidth
+									label='Add title'
+									InputLabelProps={{
+										classes: {
+											root: classes.titleLabel
+										}
+									}}
+									InputProps={{
+										classes: {
+											input: classes.titleContent
+										}
+									}}
+                                    value={title}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+								/>
+							</Grid>
+							<Grid item>
+								<Box mt={1} ml={2}>
+									<Button
+										color='primary'
+										size='large'
+										variant='contained'
+									>
+										Save
+									</Button>
+								</Box>
+							</Grid>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		);

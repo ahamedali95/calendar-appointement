@@ -6,6 +6,8 @@ import { createStore } from 'redux'
 import calendarApp from './redux/reducers';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
+import {ThemeProvider} from '@material-ui/core/styles';
+import theme from "./layout/theme";
 
 declare global {
     interface Window { __REDUX_DEVTOOLS_EXTENSION__: any; }
@@ -17,9 +19,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-	<Provider store={ store as any}>
-		<AppContainer />
-	</Provider>,
+	<ThemeProvider theme={theme}>
+		<Provider store={ store as any}>
+			<AppContainer />
+		</Provider>
+	</ThemeProvider>,
 	document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
