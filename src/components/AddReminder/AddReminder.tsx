@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import RemainderDetails from "./RemainderDetails";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -24,12 +25,6 @@ const styles = (theme: Theme) => createStyles({
 		position: 'absolute',
 		right: '10px',
 		top: '10px'
-	},
-	titleContent: {
-		fontSize: '28px'
-	},
-	titleLabel: {
-		fontSize: '28px'
 	}
 });
 
@@ -39,13 +34,11 @@ interface Props extends WithStyles<typeof styles>{
 }
 
 const AddReminder = (props: Props) => {
-        const [ title, setTitle ] = useState<string>('');
-        const [ color, setColor ] = useState<string>('');
 		const { classes, isOpen, onClose } = props;
 
 		return (
 			<Dialog
-				open={ isOpen }
+				open={ !isOpen }
 				onClose={onClose}
 				aria-labelledby='form-dialog-title'
 				fullWidth={ true }
@@ -59,42 +52,7 @@ const AddReminder = (props: Props) => {
 				</DialogTitle>
 				<Divider light />
 				<DialogContent className={ classes.addReminderFormContainer }>
-					<Grid
-						direction='row'
-						container
-					>
-						<Grid item container>
-							<Grid item xs={10}>
-								<TextField
-									fullWidth
-									label='Add title'
-									InputLabelProps={{
-										classes: {
-											root: classes.titleLabel
-										}
-									}}
-									InputProps={{
-										classes: {
-											input: classes.titleContent
-										}
-									}}
-                                    value={title}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-								/>
-							</Grid>
-							<Grid item>
-								<Box mt={1} ml={2}>
-									<Button
-										color='primary'
-										size='large'
-										variant='contained'
-									>
-										Save
-									</Button>
-								</Box>
-							</Grid>
-						</Grid>
-					</Grid>
+					<RemainderDetails />
 				</DialogContent>
 			</Dialog>
 		);

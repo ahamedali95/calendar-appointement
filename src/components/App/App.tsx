@@ -45,7 +45,7 @@ const styles = (theme: Theme) => createStyles({
 		margin: '25px',
 		width: '100%',
 		height: '90%',
-        marginTop: theme.spacing(17)
+        marginTop: theme.spacing(11)
 	},
 	calendarHeader: {
 		display: 'flex',
@@ -110,19 +110,19 @@ class App extends Component<Props, State> {
 
 		return (
 			<div className={ classes.root }>
-                <AppBar>
-                    <Toolbar>
-                        {/* Ideally, official application logo belongs here*/}
-                        <ScheduleIcon className={classes.logo} />
-                        <Typography
-                            className={classes.appName}
-                            variant="h6"
-                        >
-                            Book Remainder
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
 				<Paper className={ classes.calendar }>
+					<AppBar>
+						<Toolbar>
+							{/* Ideally, official application logo belongs here*/}
+							<ScheduleIcon className={classes.logo} />
+							<Typography
+								className={classes.appName}
+								variant="h6"
+							>
+								Book Remainder
+							</Typography>
+						</Toolbar>
+					</AppBar>
 					<header className={ classes.calendarHeader }>
                         <Button
                             variant='outlined'
