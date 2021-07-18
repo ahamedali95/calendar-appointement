@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import deepPurple from '@material-ui/core/colors/deepPurple';
-import { WithStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core/styles';
+import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 import {isSameMonth, isSameDay, getDate, format} from 'date-fns';
 
 

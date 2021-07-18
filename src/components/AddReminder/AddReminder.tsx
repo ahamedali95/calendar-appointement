@@ -17,8 +17,9 @@ import { format } from 'date-fns';
 
 import RemainderDetails from './ReminderDetails';
 import { remainderDetailsReducer } from '../../reducers';
-import { initialState as remainderDetailsState, InitialState } from '../../reducers/remainderDetailsReducer';
-import type {Day} from '../../redux/dayInfo';
+import { initialState as remainderDetailsState } from '../../reducers/remainderDetailsReducer';
+import type { Day } from '../../redux/dayInfo';
+import type { InitialState } from '../../reducers/remainderDetailsReducer';
 
 
 const styles = () => createStyles({
@@ -62,6 +63,7 @@ const AddReminder = (props: Props) => {
 			};
 
 			onAddDayInfo(day);
+			onClose();
 		};
 
 		const handleChange = useCallback((property: keyof InitialState, value: any): void => {

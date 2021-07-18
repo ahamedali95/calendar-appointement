@@ -1,5 +1,6 @@
 import React from 'react'
-import { WithStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core/styles';
+import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 import DayName from './DayName'
 import { daysArr } from '../../utils/dateUtils'
 

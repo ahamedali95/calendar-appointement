@@ -6,7 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
-import {createStyles, Theme, WithStyles} from '@material-ui/core';
+import type { Theme } from '@material-ui/core/styles';
+import {createStyles, WithStyles} from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

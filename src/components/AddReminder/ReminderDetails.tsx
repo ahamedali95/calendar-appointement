@@ -11,7 +11,7 @@ import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import SubjectIcon from '@material-ui/icons/Subject';
 
-import {InitialState} from '../../reducers/remainderDetailsReducer';
+import type {InitialState} from '../../reducers/remainderDetailsReducer';
 import CircleColorPicker from './CircleColorPicker';
 import type {Color} from './CircleColorPicker';
 
@@ -41,7 +41,7 @@ interface ReminderDetailsProps extends WithStyles<typeof remainderDetailsStyles>
 }
 
 const ReminderDetails: FunctionComponent<ReminderDetailsProps> = ({ classes, onCancelClick, onSaveClick, onChange, data, onResetClick }) => {
-    const isTitleValid = useMemo((): boolean => data.title.length <= 30, [ data.title ]);
+    const isTitleValid = useMemo((): boolean => (data.title.length <= 30), [ data.title ]);
 
     return (
         <Grid
