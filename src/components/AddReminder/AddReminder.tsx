@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 
 // I believe material-ui supports tree shaking as it uses ES6 to construct its modules
 // so we can able to write more simplified import statements. To confirm,

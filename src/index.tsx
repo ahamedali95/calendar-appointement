@@ -1,29 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppContainer from './components/App/AppContainer';
+
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import calendarApp from './redux/reducers';
-import * as serviceWorker from './serviceWorker';
-import './index.css';
+
 import {ThemeProvider} from '@material-ui/core/styles';
-import theme from "./layout/theme";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
 import DateFnsUtils from '@date-io/date-fns';
 
-declare global {
-    interface Window { __REDUX_DEVTOOLS_EXTENSION__: any; }
-}
+import * as serviceWorker from './serviceWorker';
+import AppContainer from './components/App/AppContainer';
+import theme from './layout/theme';
+import store from './store';
 
-const store = createStore(
-	calendarApp,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import './index.css';
 
 ReactDOM.render(
 	<ThemeProvider theme={theme}>
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
-			<Provider store={ store as any}>
+			<Provider store={store}>
 				<AppContainer />
 			</Provider>
 		</MuiPickersUtilsProvider>

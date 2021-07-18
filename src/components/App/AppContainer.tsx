@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
 import App from './App';
-
-import { openAddReminder } from '../../redux/actions';
+import { openAddReminder } from '../../redux/reminderStatus';
 
 interface Props {}
 interface State {}
