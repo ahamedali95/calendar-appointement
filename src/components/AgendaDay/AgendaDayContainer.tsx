@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import AgendaDay from './AgendaDay';
 import { closeAgenda } from '../../redux/agendaStatus';
-import type {Day} from "../../redux/dayInfo";
+import type {Day} from '../../redux/dayInfo';
 import { removeDayInfo } from '../../redux/dayInfo';
 
 interface Props {}

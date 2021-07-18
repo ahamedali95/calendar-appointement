@@ -13,12 +13,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import {format} from 'date-fns';
 
-import {Reminder} from "../../redux/dayInfo";
+import {Reminder} from '../../redux/dayInfo';
 
 
 const remindersStyles = () => createStyles({
     accordion: {
         borderBottom: '4px solid'
+    },
+    accordionDetails: {
+        flexDirection: 'column'
+    },
+    accordionExpanded: {
+        border: '1px solid'
     },
     reminderTime: {
         color: 'gray'
@@ -76,8 +82,14 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
                                     ml={3}
                                     mb={1}
                                 >
-                                    <Accordion className={classes.accordion} style={{ borderColor: `${reminder.color}` }}>
-                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                    <Accordion
+                                        classes={{
+                                            root: classes.accordion,
+                                            expanded: classes.accordionExpanded
+                                        }}
+                                        style={{ borderColor: `${reminder.color}` }}
+                                    >
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />} >
                                             <Typography
                                                 className={classes.reminderTime}
                                                 component='span'
@@ -86,8 +98,8 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
                                             </Typography>
                                             <Typography component='span'>&nbsp;-&nbsp;{reminder.title}</Typography>
                                         </AccordionSummary>
-                                        <AccordionDetails>
-                                            {reminder.note}
+                                        <AccordionDetails className={classes.accordionDetails}>
+                                            <Typography>{reminder.note}</Typography>
                                         </AccordionDetails>
                                         <Divider />
                                         <AccordionActions>

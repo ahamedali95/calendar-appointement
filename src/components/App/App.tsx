@@ -7,9 +7,9 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Toolbar from "@material-ui/core/Toolbar";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
@@ -24,12 +24,12 @@ import './App.css';
 
 const styles = (theme: Theme) => createStyles({
     appName: {
-        textShadow: "1px 1px 1px #fff, 2px 2px 1px #fff",
-        fontSize: "1.6rem",
+        textShadow: '1px 1px 1px #fff, 2px 2px 1px #fff',
+        fontSize: '1.6rem',
         marginLeft: theme.spacing(1)
     },
     logo: {
-        fontSize: "1.8em"
+        fontSize: '1.8em'
     },
 	root: {
 		display: 'flex',
@@ -118,7 +118,7 @@ class App extends Component<Props, State> {
 							<CalendarTodayIcon />
 							<Typography
 								className={classes.appName}
-								variant="h6"
+								variant='h6'
 							>
 								Book Reminder
 							</Typography>

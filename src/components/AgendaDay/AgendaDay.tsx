@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import type { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
-import type {Reminder} from "../../redux/dayInfo";
+import type {Reminder} from '../../redux/dayInfo';
 import Reminders from './Reminders';
 
 const styles = (theme: Theme) => createStyles({
