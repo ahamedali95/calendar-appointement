@@ -3,7 +3,6 @@ import React, {useMemo, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Chip from '@material-ui/core/Chip';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import type { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
@@ -64,7 +63,6 @@ const styles = (theme: Theme) => createStyles({
 	},
 	remindersContainer: {
 		height: '100%',
-		overflowY: 'scroll'
 	},
 	listItem: {
 		borderRadius: '2px 1px',
@@ -96,7 +94,6 @@ const CalendarDay = (props: Props) => {
 
 	const onMouseOver = () => setFocused(true);
 	const onMouseOut = () => setFocused(false);
-	console.log(reminders)
 
 	const formattedData = useMemo((): Record<string, Reminder[]> => {
 		return ReminderUtil.sortReminders(reminders);
@@ -108,6 +105,7 @@ const CalendarDay = (props: Props) => {
 		for (const key in formattedData) {
 			formattedData[key].forEach((reminder: Reminder) => {
 				const date = new Date(1970, 0, 1, Number(reminder.time.split(':')[0]), Number(reminder.time.split(':')[1]));
+				const title = reminder.title.length > 10 ? reminder.title.slice(0, 10) + '...' : reminder.title;
 
 				items.push(
 					<ListItem
@@ -115,14 +113,13 @@ const CalendarDay = (props: Props) => {
 						style={{ backgroundColor: `${reminder.color}` }}
 					>
 						<Typography variant='caption' component='span'>{format(date, 'hh:mm a')}</Typography>
-						<Typography variant='caption' component='span'>&nbsp;-&nbsp;{reminder.title}</Typography>
+						<Typography variant='caption' component='span'>&nbsp;-&nbsp;{title}</Typography>
 					</ListItem>
 				);
 			});
 		}
 
-		return <List>{items}</List>
-
+		return <List style={{height: `${100 - (100 * 50/100)}px`, overflow: 'auto'}}>{items}</List>
 	};
 
 	return (
@@ -138,7 +135,7 @@ const CalendarDay = (props: Props) => {
 		>
 			<Avatar className={ avatarClass }>{ getDate( dateObj.date ) }</Avatar>
 			<div className={ classes.remindersContainer }>
-				{getList()}
+				{reminders.length ? getList() : []}
 			</div>
 		</div>
 	)

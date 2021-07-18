@@ -107,9 +107,6 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
         return result;
     };
 
-
-    console.log(formattedData)
-
     return (
         <>
             {getList()}
