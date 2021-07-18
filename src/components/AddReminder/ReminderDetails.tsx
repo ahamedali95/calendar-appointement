@@ -6,13 +6,14 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import {createStyles, WithStyles} from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { DatePicker } from '@material-ui/pickers';
+import { KeyboardDateTimePicker } from '@material-ui/pickers';
 
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import SubjectIcon from '@material-ui/icons/Subject';
 
 import {InitialState} from '../../reducers/remainderDetailsReducer';
-import CircleColorPicker, {Color} from './CircleColorPicker';
+import CircleColorPicker from './CircleColorPicker';
+import type {Color} from './CircleColorPicker';
 
 
 const remainderDetailsStyles = () => createStyles({
@@ -31,7 +32,7 @@ const remainderDetailsStyles = () => createStyles({
     }
 });
 
-interface RemainderDetailsProps extends WithStyles<typeof remainderDetailsStyles> {
+interface ReminderDetailsProps extends WithStyles<typeof remainderDetailsStyles> {
     onCancelClick: () => unknown;
     onSaveClick: () => unknown;
     onChange: (property: keyof InitialState, value: any) => unknown;
@@ -39,7 +40,7 @@ interface RemainderDetailsProps extends WithStyles<typeof remainderDetailsStyles
     onResetClick: () => unknown;
 }
 
-const RemainderDetails: FunctionComponent<RemainderDetailsProps> = ({ classes, onCancelClick, onSaveClick, onChange, data, onResetClick }) => {
+const ReminderDetails: FunctionComponent<ReminderDetailsProps> = ({ classes, onCancelClick, onSaveClick, onChange, data, onResetClick }) => {
     const isTitleValid = useMemo((): boolean => data.title.length <= 30, [ data.title ]);
 
     return (
@@ -94,18 +95,18 @@ const RemainderDetails: FunctionComponent<RemainderDetailsProps> = ({ classes, o
             <Grid
                 item
                 container
+                spacing={3}
             >
                 <Grid item xs={1}>
                     <Box mt={1} />
                     <InsertInvitationIcon />
                 </Grid>
                 <Grid item>
-                    <DatePicker
-                        autoOk
-                        format='MMM dd, yyyy'
+                    <KeyboardDateTimePicker
                         variant='inline'
-                        value={data.date}
-                        onChange={(value: Date) => onChange('date', value)}
+                        value={data.datetime}
+                        onChange={(value: Date) => onChange('datetime', value)}
+                        format='MMM dd, yyyy hh:mm a..aaa'
                     />
                 </Grid>
             </Grid>
@@ -173,4 +174,4 @@ const RemainderDetails: FunctionComponent<RemainderDetailsProps> = ({ classes, o
     )
 };
 
-export default withStyles(remainderDetailsStyles)(RemainderDetails);
+export default withStyles(remainderDetailsStyles)(ReminderDetails);

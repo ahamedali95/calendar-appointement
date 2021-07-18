@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import { WithStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { isSameMonth, isSameDay, getDate } from 'date-fns';
+import {isSameMonth, isSameDay, getDate, format} from 'date-fns';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -65,7 +65,7 @@ interface DateObj {
 interface Props extends WithStyles<typeof styles>{
 	calendarDate: Date,
 	dateObj: DateObj,
-	onDayClick: (dateObj: DateObj) => void
+	onDayClick: (dateObj: string) => unknown
 }
 
 const CalendarDay = (props: Props) => {
@@ -85,7 +85,7 @@ const CalendarDay = (props: Props) => {
 		<div
 			onMouseOver={ onMouseOver }
 			onMouseOut={ onMouseOut }
-			onClick={ () => onDayClick( dateObj ) }
+			onClick={ () => onDayClick( format(dateObj.date, 'MM-dd-yyyy') ) }
 			className={
 				isSameMonth( dateObj.date, calendarDate )
 					? classes.dayCell

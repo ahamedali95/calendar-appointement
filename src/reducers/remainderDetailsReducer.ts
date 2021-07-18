@@ -3,14 +3,14 @@ import {Color} from '../components/AddReminder/CircleColorPicker';
 export type InitialState = {
   title: string;
   color: Color;
-  date: Date;
+  datetime: Date;
   note: string;
 };
 
 export const initialState: InitialState = {
     title: '',
     color: { value: '#6d1cac', label: 'Calender' },
-    date: new Date(),
+    datetime: new Date(),
     note: ''
 };
 

@@ -30,15 +30,15 @@ const styles = (theme: Theme) => createStyles({
 
 interface Props extends WithStyles<typeof styles>{
 	agendaStatus: {
-		isOpen: boolean,
-		date: Date
-	}
-	onClose: () => void
+		isOpen: boolean;
+		date: string;
+	};
+	onClose: () => void;
 }
 
 const AgendaDay = (props: Props) => {
 	const { classes, agendaStatus, onClose } = props;
-	const dateTitle = agendaStatus.date ? dateFns.format( agendaStatus.date, 'LLLL do, yyyy' ) : 'Closing'
+	// const dateTitle = agendaStatus.date ? dateFns.format( agendaStatus.date, 'LLLL do, yyyy' ) : 'Closing'
 
 	return (
 		<Dialog
@@ -49,7 +49,7 @@ const AgendaDay = (props: Props) => {
 			maxWidth='md'
 		>
 			<DialogTitle id='form-dialog-title'>
-				{ dateTitle }
+				dateTitle
 				<IconButton aria-label='Close' className={ classes.closeButton } onClick={ onClose }>
 					<CloseIcon />
 				</IconButton>

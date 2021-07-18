@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AddReminder from './AddReminder';
 import { closeAddReminder } from '../../redux/reminderStatus';
+import { addDayInfo } from '../../redux/dayInfo';
 
 interface State {
 	reminderStatus: {
@@ -19,6 +20,9 @@ const mapDispatchToProps = (dispatch: any) => {
 	return {
 		onClose: () => {
 			dispatch( closeAddReminder() );
+		},
+		onAddDayInfo: (obj) => {
+			dispatch(addDayInfo(obj));
 		}
 	}
 };

@@ -10,21 +10,17 @@ interface State {
 
 }
 
-interface DateObj {
-	date: Date
-}
-
 const mapStateToProps = ( state: State, ownProps: Props ) => {
-	return { ...state, ...ownProps };
-}
+	return { ...ownProps };
+};
 
 const mapDispatchToProps = (dispatch: any)=> {
 	return {
-		onDayClick: (dateObj: DateObj) => {
+		onDayClick: (dateObj: string) => {
 			dispatch( openAgenda( dateObj ) )
 		}
 	}
-}
+};
 
 const CalendarDayContainer = connect( mapStateToProps, mapDispatchToProps )( CalendarDay );
 

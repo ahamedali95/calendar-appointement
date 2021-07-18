@@ -13,9 +13,12 @@ import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
 import CloseIcon from '@material-ui/icons/Close';
 
-import RemainderDetails from './RemainderDetails';
+import { format } from 'date-fns';
+
+import RemainderDetails from './ReminderDetails';
 import { remainderDetailsReducer } from '../../reducers';
 import { initialState as remainderDetailsState, InitialState } from '../../reducers/remainderDetailsReducer';
+import type {Day} from '../../redux/dayInfo';
 
 
 const styles = () => createStyles({
@@ -33,21 +36,32 @@ const styles = () => createStyles({
 });
 
 interface Props extends WithStyles<typeof styles>{
-	isOpen: boolean,
-	onClose: () => void
+	isOpen: boolean;
+	onClose: () => void;
+	onAddDayInfo: (obj: Day) => unknown;
 }
 
 const AddReminder = (props: Props) => {
-		const { classes, isOpen, onClose } = props;
+		const { classes, isOpen, onClose, onAddDayInfo } = props;
 		const [ state, dispatch ] = useReducer(remainderDetailsReducer, remainderDetailsState, undefined);
 
 		const handleClose = (): void => {
-			handleResetClick(); //Clear field on close of the dialog. Currently, MUI dialog does not clear internal state on close.
-			onClose()
+			handleResetClick(); //Clear fields on close of the dialog. Currently, MUI dialog does not clear internal state on close.
+			onClose();
 		};
 
 		const handleSaveClick = (): void => {
+			const day: Day = {
+				date: format(state.datetime, 'MM-dd-yyyy'),
+				reminders: [{
+					title: state.title,
+					color: state.color.value,
+					note: state.note,
+					time: format(state.datetime, 'hh:mm a')
+				}]
+			};
 
+			onAddDayInfo(day);
 		};
 
 		const handleChange = useCallback((property: keyof InitialState, value: any): void => {
