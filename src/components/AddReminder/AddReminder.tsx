@@ -65,6 +65,7 @@ const AddReminder = (props: Props) => {
 			};
 
 			onAddDayInfo(day);
+			handleResetClick(); //Clear fields on close of the dialog. Currently, MUI dialog does not clear internal state on close.
 			onClose();
 		};
 

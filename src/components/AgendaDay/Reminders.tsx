@@ -33,13 +33,14 @@ interface RemindersProps extends WithStyles<typeof remindersStyles>{
 const getTwentyFourHourTimeSlots = () => {
     const twentyFourHourTimeSlots = {};
 
-    for (let i = 1; i < 25; i ++){
+    for (let i = 1; i < 25; i ++) {
         twentyFourHourTimeSlots[i] = [];
     }
 
     return twentyFourHourTimeSlots;
 };
 
+//Improvement: auto scroll to current time would be nice
 const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminderDelete }) => {
     const formattedData = useMemo((): Record<string, Reminder[]> => {
         const obj = getTwentyFourHourTimeSlots();
@@ -47,7 +48,10 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
         for (const d of data) {
             const key = d.time.split(':')[0];
 
-            obj[key] = [ ...obj[key],  d]
+            obj[key] = [ ...obj[key],  d].sort((a: Reminder, b: Reminder) => {
+                return new Date(1970, 0, 1, Number(a.time.split(':')[0]), Number(a.time.split(':')[1])).valueOf() -
+                    new Date(1970, 0, 1, Number(b.time.split(':')[0]), Number(b.time.split(':')[1])).valueOf()
+            });
         }
 
         return obj;
@@ -63,7 +67,7 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
                     <Typography variant='body2'>{format(new Date(1970, 0, 1, Number(key)), 'h:mm a')}</Typography>
                     <Box mt={2} />
                     {
-                        formattedData[key].map((reminder: Reminder) => {
+                        formattedData[key].map((reminder: Reminder): JSX.Element => {
                             const date = new Date(1970, 0, 1, Number(reminder.time.split(':')[0]), Number(reminder.time.split(':')[1]));
 
                             return (
@@ -87,6 +91,7 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
                                         </AccordionDetails>
                                         <Divider />
                                         <AccordionActions>
+                                            {/* Improvement: confirm before delete */}
                                             <Button
                                                 color='primary'
                                                 size='medium'

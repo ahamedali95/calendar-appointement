@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import AddReminder from './AddReminder';
 import { closeAddReminder } from '../../redux/reminderStatus';
 import { addDayInfo } from '../../redux/dayInfo';
@@ -10,8 +11,7 @@ interface State {
 }
 
 const mapStateToProps = (state: State) => {
-	console.log(state)
-	return { 
+	return {
 		isOpen: state.reminderStatus.isOpen
 	};
 };
