@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState, memo} from 'react';
 
 import Select from '@material-ui/core/Select';
 import Badge from '@material-ui/core/Badge';
@@ -136,4 +136,4 @@ const CircleColorPicker: FunctionComponent<CircleColorPickerProps> = ({ classes,
     );
 };
 
-export default withStyles(circleColorPickerStyles)(CircleColorPicker);
+export default withStyles(circleColorPickerStyles)(memo(CircleColorPicker));

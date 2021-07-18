@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FunctionComponent, useMemo} from 'react';
+import React, {ChangeEvent, FunctionComponent, memo, useMemo} from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -174,4 +174,4 @@ const ReminderDetails: FunctionComponent<ReminderDetailsProps> = ({ classes, onC
     )
 };
 
-export default withStyles(remainderDetailsStyles)(ReminderDetails);
+export default withStyles(remainderDetailsStyles)(memo(ReminderDetails));

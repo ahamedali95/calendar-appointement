@@ -68,6 +68,9 @@ const styles = (theme: Theme) => createStyles({
 		borderRadius: '2px 1px',
 		color: '#fff',
 		border: '1px dotted #000'
+	},
+	listItemContent: {
+		fontSize: '8px'
 	}
 });
 
@@ -105,15 +108,28 @@ const CalendarDay = (props: Props) => {
 		for (const key in formattedData) {
 			formattedData[key].forEach((reminder: Reminder) => {
 				const date = new Date(1970, 0, 1, Number(reminder.time.split(':')[0]), Number(reminder.time.split(':')[1]));
-				const title = reminder.title.length > 10 ? reminder.title.slice(0, 10) + '...' : reminder.title;
+				const title = reminder.title.length > 8 ? reminder.title.slice(0, 5) + '...' : reminder.title;
 
 				items.push(
 					<ListItem
+						key={reminder.id}
 						className={classes.listItem}
 						style={{ backgroundColor: `${reminder.color}` }}
 					>
-						<Typography variant='caption' component='span'>{format(date, 'hh:mm a')}</Typography>
-						<Typography variant='caption' component='span'>&nbsp;-&nbsp;{title}</Typography>
+						<Typography
+							className={classes.listItemContent}
+							variant='caption'
+							component='span'
+						>
+							{format(date, 'hh:mm a')}
+						</Typography>
+						<Typography
+							className={classes.listItemContent}
+							variant='caption'
+							component='span'
+						>
+							&nbsp;-&nbsp;{title}
+						</Typography>
 					</ListItem>
 				);
 			});

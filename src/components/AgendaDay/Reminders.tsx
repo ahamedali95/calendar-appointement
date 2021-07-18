@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useMemo} from 'react';
+import React, {FunctionComponent, useMemo, memo} from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -114,4 +114,4 @@ const Reminders: FunctionComponent<RemindersProps> = ({ data, classes, onReminde
     );
 };
 
-export default withStyles(remindersStyles)(Reminders);
+export default withStyles(remindersStyles)(memo(Reminders));

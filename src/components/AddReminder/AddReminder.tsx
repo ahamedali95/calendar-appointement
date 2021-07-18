@@ -47,12 +47,20 @@ const AddReminder = (props: Props) => {
 		const { classes, isOpen, onClose, onAddDayInfo } = props;
 		const [ state, dispatch ] = useReducer(remainderDetailsReducer, remainderDetailsState, undefined);
 
-		const handleClose = (): void => {
+		const handleChange = useCallback((property: keyof InitialState, value: any): void => {
+			dispatch({ type: 'UPDATE_PROPERTY', property, value });
+		}, [ dispatch ]);
+
+		const handleResetClick = useCallback((): void => {
+			dispatch({ type: 'RESET' });
+		}, [ dispatch ]);
+
+		const handleClose = useCallback((): void => {
 			handleResetClick(); //Clear fields on close of the dialog. Currently, MUI dialog does not clear internal state on close.
 			onClose();
-		};
+		}, [ handleResetClick, onClose ]);
 
-		const handleSaveClick = (): void => {
+		const handleSaveClick = useCallback((): void => {
 			const day: Day = {
 				date: format(state.datetime, 'MM-dd-yyyy'),
 				reminders: [{
@@ -67,17 +75,7 @@ const AddReminder = (props: Props) => {
 			onAddDayInfo(day);
 			handleResetClick(); //Clear fields on close of the dialog. Currently, MUI dialog does not clear internal state on close.
 			onClose();
-		};
-
-		const handleChange = useCallback((property: keyof InitialState, value: any): void => {
-			dispatch({ type: 'UPDATE_PROPERTY', property, value });
-		}, [ dispatch ]);
-
-		const handleResetClick = useCallback((): void => {
-			dispatch({ type: 'RESET' });
-		}, [ dispatch ]);
-
-		console.log(state)
+		}, [ state, onAddDayInfo, handleResetClick, onClose ]);
 
 		return (
 			<Dialog
@@ -107,4 +105,4 @@ const AddReminder = (props: Props) => {
 		);
 }
 
-export default withStyles(styles)( AddReminder );
+export default withStyles(styles)(AddReminder);

@@ -22,7 +22,7 @@ interface Props extends WithStyles<typeof styles>{
 const CalendarGrid = (props: Props) => {
 	const { classes, date } = props;
 	const calendarCells = getMonthCells( date );
-	console.log(calendarCells)
+
 	return (
 		<div className={ classes.calendarGrid }>
 			<DaysRow />

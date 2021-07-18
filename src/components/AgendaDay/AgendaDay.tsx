@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import * as dateFns from 'date-fns';
 
@@ -46,12 +46,12 @@ const AgendaDay = (props: Props) => {
 	const { classes, agendaStatus, onClose, reminders, onRemoveDayInfo } = props;
 	const dateTitle = agendaStatus.date ? dateFns.format( new Date(agendaStatus.date), 'LLLL do, yyyy' ) : 'Closing';
 
-	const handleReminderDelete = (reminder: Reminder): void => {
+	const handleReminderDelete = useCallback((reminder: Reminder): void => {
 		onRemoveDayInfo({
 			day: agendaStatus.date,
 			reminderId: reminder.id
 		});
-	};
+	}, [ onRemoveDayInfo, agendaStatus.date ]);
 
 	return (
 		<Dialog
@@ -78,4 +78,4 @@ const AgendaDay = (props: Props) => {
 	);
 }
 
-export default withStyles( styles )( AgendaDay );
+export default withStyles( styles )(AgendaDay);
