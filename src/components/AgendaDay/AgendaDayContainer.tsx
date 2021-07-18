@@ -11,8 +11,8 @@ interface State {
 	agendaStatus: {
 		isOpen: boolean,
 		date: string
-	},
-	days: Day[]
+	};
+	days: Day[];
 }
 
 const mapStateToProps = ( state: State, ownProps: Props ) => {

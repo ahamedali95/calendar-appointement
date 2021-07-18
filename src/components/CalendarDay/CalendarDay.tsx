@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Chip from '@material-ui/core/Chip';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import type { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
+
 import {isSameMonth, isSameDay, getDate, format} from 'date-fns';
 
+import {Reminder} from "../../redux/dayInfo";
+import ReminderUtil from "../../utils/ReminderUtil";
+import {Typography} from "@material-ui/core";
 
 const styles = (theme: Theme) => createStyles({
 	dayCell: {
@@ -55,7 +63,13 @@ const styles = (theme: Theme) => createStyles({
 		backgroundColor: deepPurple[800],
 	},
 	remindersContainer: {
-		height: '100%'
+		height: '100%',
+		overflowY: 'scroll'
+	},
+	listItem: {
+		borderRadius: '2px 1px',
+		color: '#fff',
+		border: '1px dotted #000'
 	}
 });
 
@@ -64,14 +78,15 @@ interface DateObj {
 }
 
 interface Props extends WithStyles<typeof styles>{
-	calendarDate: Date,
-	dateObj: DateObj,
-	onDayClick: (dateObj: string) => unknown
+	calendarDate: Date;
+	dateObj: DateObj;
+	onDayClick: (dateObj: string) => unknown;
+	reminders: Reminder[];
 }
 
 const CalendarDay = (props: Props) => {
-	const { classes, dateObj, calendarDate, onDayClick } = props;
-	const [ focused, setFocused ] = useState(false)
+	const { classes, dateObj, calendarDate, onDayClick, reminders } = props;
+	const [ focused, setFocused ] = useState(false);
 
 	const isToday = isSameDay( dateObj.date, new Date() );
 	const avatarClass = isToday && focused ? classes.focusedTodayAvatar :
@@ -79,8 +94,36 @@ const CalendarDay = (props: Props) => {
 		focused ? classes.focusedAvatar :
 		classes.dateNumber;
 
-	const onMouseOver = () => setFocused(true)
-	const onMouseOut = () => setFocused(false)
+	const onMouseOver = () => setFocused(true);
+	const onMouseOut = () => setFocused(false);
+	console.log(reminders)
+
+	const formattedData = useMemo((): Record<string, Reminder[]> => {
+		return ReminderUtil.sortReminders(reminders);
+	}, [ reminders ]);
+
+	const getList = (): JSX.Element => {
+		const items = [];
+
+		for (const key in formattedData) {
+			formattedData[key].forEach((reminder: Reminder) => {
+				const date = new Date(1970, 0, 1, Number(reminder.time.split(':')[0]), Number(reminder.time.split(':')[1]));
+
+				items.push(
+					<ListItem
+						className={classes.listItem}
+						style={{ backgroundColor: `${reminder.color}` }}
+					>
+						<Typography variant='caption' component='span'>{format(date, 'hh:mm a')}</Typography>
+						<Typography variant='caption' component='span'>&nbsp;-&nbsp;{reminder.title}</Typography>
+					</ListItem>
+				);
+			});
+		}
+
+		return <List>{items}</List>
+
+	};
 
 	return (
 		<div
@@ -95,10 +138,10 @@ const CalendarDay = (props: Props) => {
 		>
 			<Avatar className={ avatarClass }>{ getDate( dateObj.date ) }</Avatar>
 			<div className={ classes.remindersContainer }>
-				{/* reminders go here */}
+				{getList()}
 			</div>
 		</div>
 	)
-}
+};
 
 export default withStyles( styles )( CalendarDay );
