@@ -19,13 +19,15 @@
     "react-redux": "^7.2.4",
     "react-scripts": "3.4.0",
     "redux": "^4.0.1",
-    "typescript": "~3.9.7"
+    "typescript": "~3.9.7",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:types": "tsc -d --declarationDir dist/lib --declarationMap --emitDeclarationOnly"
   },
   "eslintConfig": {
     "extends": "react-app"

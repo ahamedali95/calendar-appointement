@@ -1,15 +1,18 @@
 import React from 'react';
+
+import * as dateFns from 'date-fns';
+
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import type { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
-import * as dateFns from 'date-fns';
+import type {Reminder} from "../../redux/dayInfo";
+import Reminders from './Reminders';
 
 const styles = (theme: Theme) => createStyles({
 	remindersContainer: {
@@ -34,12 +37,21 @@ interface Props extends WithStyles<typeof styles>{
 		isOpen: boolean;
 		date: string;
 	};
-	onClose: () => void;
+	onClose: () => unknown;
+	reminders: Reminder[];
+	onRemoveDayInfo: (val: { day: string; reminderId: string }) => unknown
 }
 
 const AgendaDay = (props: Props) => {
-	const { classes, agendaStatus, onClose } = props;
+	const { classes, agendaStatus, onClose, reminders, onRemoveDayInfo } = props;
 	const dateTitle = agendaStatus.date ? dateFns.format( new Date(agendaStatus.date), 'LLLL do, yyyy' ) : 'Closing';
+
+	const handleReminderDelete = (reminder: Reminder): void => {
+		onRemoveDayInfo({
+			day: agendaStatus.date,
+			reminderId: reminder.id
+		});
+	};
 
 	return (
 		<Dialog
@@ -57,9 +69,10 @@ const AgendaDay = (props: Props) => {
 			</DialogTitle>
 			<Divider light />
 			<DialogContent className={ classes.remindersContainer }>
-				<Typography>
-					Use this space to list the reminders.
-				</Typography>
+				<Reminders
+					onReminderDelete={handleReminderDelete}
+					data={reminders}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

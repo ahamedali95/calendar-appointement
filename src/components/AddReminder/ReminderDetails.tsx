@@ -11,7 +11,7 @@ import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import SubjectIcon from '@material-ui/icons/Subject';
 
-import type {InitialState} from '../../reducers/remainderDetailsReducer';
+import {InitialState} from '../../reducers/remainderDetailsReducer';
 import CircleColorPicker from './CircleColorPicker';
 import type {Color} from './CircleColorPicker';
 

@@ -14,6 +14,7 @@ import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { format } from 'date-fns';
+import { v4 as uuid } from 'uuid';
 
 import RemainderDetails from './ReminderDetails';
 import { remainderDetailsReducer } from '../../reducers';
@@ -55,10 +56,11 @@ const AddReminder = (props: Props) => {
 			const day: Day = {
 				date: format(state.datetime, 'MM-dd-yyyy'),
 				reminders: [{
+					id: uuid(),
 					title: state.title,
 					color: state.color.value,
 					note: state.note,
-					time: format(state.datetime, 'hh:mm a')
+					time: format(state.datetime, 'H:mm') //24-hr format
 				}]
 			};
 

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import type { Theme } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
 import { WithStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -120,7 +120,7 @@ class App extends Component<Props, State> {
 								className={classes.appName}
 								variant="h6"
 							>
-								Book Remainder
+								Book Reminder
 							</Typography>
 						</Toolbar>
 					</AppBar>
