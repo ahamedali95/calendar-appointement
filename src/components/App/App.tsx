@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
-import green from '@material-ui/core/colors/green';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -59,105 +58,84 @@ const styles = (theme: Theme) => createStyles({
 		position: 'absolute',
 		bottom: '60px',
 		right: '50px',
-		color: '#FFF',
-		backgroundColor: green[600],
-		'&:hover': {
-			backgroundColor: green[800]
-		}
+		color: '#FFF'
 	}
 });
 
-interface Props extends WithStyles<typeof styles>{
+interface AppProps extends WithStyles<typeof styles>{
 	onFabAddClick: () => void
 }
 
-interface State {
-	date: Date
-}
-
-class App extends Component<Props, State> {
-	constructor( props: Props ) {
-		super( props );
-
-		this.state = {
-			date: new Date()
-		};
-	}
-
-	compnentDidMount() {
-
-	}
+const App: FunctionComponent<AppProps> = ({ onFabAddClick, classes }) =>  {
+	const [ date, setDate ] = useState<Date>(new Date());
 
 	// arrow functions to skip binding in constructor
 	// wow I love this date library
-	prevMonth = () => {
-		this.setState( { date: dateFns.subMonths( this.state.date, 1 ) } );
+	const prevMonth = () => {
+		setDate(dateFns.subMonths( date, 1 ));
 	};
 
-	nextMonth = () => {
-		this.setState( { date: dateFns.addMonths( this.state.date, 1 ) } );
+	const nextMonth = () => {
+		setDate(dateFns.addMonths( date, 1 ));
 	};
 
-    currentMonth = () => {
-        this.setState( { date: new Date() } );
+    const currentMonth = () => {
+        setDate(new Date());
     };
 
-	render() {
-		const { classes, onFabAddClick } = this.props;
-		const { date } = this.state;
 
-		const month = date.toLocaleString( 'en-us', { month: 'long' } );
-		const year = dateFns.getYear( date );
+	const month = date.toLocaleString( 'en-us', { month: 'long' } );
+	const year = dateFns.getYear( date );
 
-		return (
-			<div className={ classes.root }>
-				<Paper className={ classes.calendar }>
-					<AppBar>
-						<Toolbar>
-							{/* Ideally, official application logo belongs here*/}
-							<CalendarTodayIcon />
-							<Typography
-								className={classes.appName}
-								variant='h6'
-							>
-								Book Reminder
-							</Typography>
-						</Toolbar>
-					</AppBar>
-					<header className={ classes.calendarHeader }>
-                        <Button
-                            variant='outlined'
-                            color='secondary'
-                            onClick={this.currentMonth}
-                        >
-                            Today
-                        </Button>
-						<IconButton aria-label='Last Month' onClick={ this.prevMonth }>
-							<KeyboardArrowLeftIcon fontSize='large' />
-						</IconButton>
-						<Typography variant='h3'>
-							{ month } { year }
+	return (
+		<div className={ classes.root }>
+			<Paper className={ classes.calendar }>
+				<AppBar>
+					<Toolbar>
+						{/* Ideally, official application logo belongs here*/}
+						<CalendarTodayIcon />
+						<Typography
+							className={classes.appName}
+							variant='h6'
+						>
+							Book Reminder
 						</Typography>
-						<IconButton aria-label='Next Month' onClick={ this.nextMonth }>
-							<KeyboardArrowRightIcon fontSize='large' />
-						</IconButton>
-					</header>
-					<CalendarGrid
-						date={ date }
-					/>
-					<Fab
-						aria-label='Add'
-						className={classes.fabAdd}
-						onClick={ onFabAddClick }
+					</Toolbar>
+				</AppBar>
+				<header className={ classes.calendarHeader }>
+					<Button
+						variant='outlined'
+						color='secondary'
+						onClick={currentMonth}
 					>
-						<AddIcon />
-					</Fab>
-				</Paper>
-				<AgendaDayContainer />
-				<AddReminderContainer />
-			</div>
-		);
-	}
-}
+						Today
+					</Button>
+					<IconButton aria-label='Last Month' onClick={ prevMonth }>
+						<KeyboardArrowLeftIcon fontSize='large' />
+					</IconButton>
+					<Typography variant='h3'>
+						{ month } { year }
+					</Typography>
+					<IconButton aria-label='Next Month' onClick={ nextMonth }>
+						<KeyboardArrowRightIcon fontSize='large' />
+					</IconButton>
+				</header>
+				<CalendarGrid
+					date={ date }
+				/>
+				<Fab
+					aria-label='Add'
+					className={classes.fabAdd}
+					color='primary'
+					onClick={ onFabAddClick }
+				>
+					<AddIcon />
+				</Fab>
+			</Paper>
+			<AgendaDayContainer />
+			<AddReminderContainer />
+		</div>
+	);
+};
 
 export default withStyles( styles )( App );
